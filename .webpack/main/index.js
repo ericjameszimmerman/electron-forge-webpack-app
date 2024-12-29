@@ -920,17 +920,23 @@ if (__webpack_require__(/*! electron-squirrel-startup */ "./node_modules/electro
 const createWindow = () => {
     // Create the browser window.
     const mainWindow = new electron_1.BrowserWindow({
-        height: 600,
-        width: 800,
+        height: 800,
+        width: 1200,
         roundedCorners: false,
         webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false,
+            webSecurity: true,
             preload: 'C:\\Projects\\blog\\20241227-electron\\electron-forge-webpack-app\\.webpack\\renderer\\main_window\\preload.js',
+            sandbox: false
         },
     });
     // and load the index.html of the app.
     mainWindow.loadURL('http://localhost:3000/main_window');
-    // Open the DevTools.
-    mainWindow.webContents.openDevTools();
+    // Open the DevTools only in development
+    if (true) {
+        mainWindow.webContents.openDevTools();
+    }
 };
 // Add this menu template before the createWindow function
 const createMenu = () => {
