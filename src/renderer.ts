@@ -6,8 +6,29 @@
  * https://electronjs.org/docs/latest/tutorial/process-model
  */
 
-import './index.css';
+import './styles.css';
 import { Chart, ChartConfiguration } from 'chart.js/auto';
+
+// Handle navigation
+const handleNavigation = () => {
+  const navButtons = document.querySelectorAll('.nav-button');
+  const mainContent = document.querySelector('.main-content');
+
+  navButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      const target = e.currentTarget as HTMLButtonElement;
+      const view = target.dataset.view;
+
+      // Update active state
+      navButtons.forEach(btn => btn.classList.remove('active'));
+      target.classList.add('active');
+
+      // Here you would handle showing/hiding different views
+      // For now, we'll just log the view change
+      console.log(`Switching to ${view} view`);
+    });
+  });
+};
 
 // Initialize the chart
 const initDashboard = () => {
@@ -67,25 +88,25 @@ const initDashboard = () => {
           beginAtZero: true,
           max: 100,
           grid: {
-            color: 'rgba(255, 255, 255, 0.1)'
+            color: 'rgba(0, 0, 0, 0.1)'
           },
           ticks: {
-            color: '#ffffff'
+            color: '#666666'
           }
         },
         x: {
           grid: {
-            color: 'rgba(255, 255, 255, 0.1)'
+            color: 'rgba(0, 0, 0, 0.1)'
           },
           ticks: {
-            color: '#ffffff'
+            color: '#666666'
           }
         }
       },
       plugins: {
         legend: {
           labels: {
-            color: '#ffffff'
+            color: '#333333'
           }
         }
       }
@@ -134,9 +155,13 @@ const initDashboard = () => {
   }, 1000);
 };
 
-// Initialize dashboard when DOM is ready
+// Initialize everything when DOM is ready
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initDashboard);
+  document.addEventListener('DOMContentLoaded', () => {
+    initDashboard();
+    handleNavigation();
+  });
 } else {
   initDashboard();
+  handleNavigation();
 }

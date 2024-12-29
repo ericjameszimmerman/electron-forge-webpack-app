@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .toolbar-button {
+    @apply px-2 py-1 text-sm flex items-center gap-2 hover:bg-gray-200 rounded transition-colors;
+  }
+
+  .nav-button {
+    @apply px-3 py-2 flex flex-col items-center gap-1 hover:bg-gray-200 rounded transition-colors min-w-[80px];
+  }
+
+  .nav-button.active {
+    @apply bg-blue-100 hover:bg-blue-200;
+  }
+
+  .status-bar {
+    @apply text-sm px-2 py-1 bg-[#f0f0f0] border-t border-gray-300;
+  }
+} 

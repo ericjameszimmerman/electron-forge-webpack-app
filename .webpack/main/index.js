@@ -894,161 +894,6 @@ function plural(ms, n, name) {
 
 /***/ }),
 
-/***/ "./src/index.ts":
-/*!**********************!*\
-  !*** ./src/index.ts ***!
-  \**********************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const electron_1 = __webpack_require__(/*! electron */ "electron");
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (__webpack_require__(/*! electron-squirrel-startup */ "./node_modules/electron-squirrel-startup/index.js")) {
-    electron_1.app.quit();
-}
-const createWindow = () => {
-    // Create the browser window.
-    const mainWindow = new electron_1.BrowserWindow({
-        height: 800,
-        width: 1200,
-        roundedCorners: false,
-        webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false,
-            webSecurity: true,
-            preload: 'C:\\Projects\\blog\\20241227-electron\\electron-forge-webpack-app\\.webpack\\renderer\\main_window\\preload.js',
-            sandbox: false
-        },
-    });
-    // and load the index.html of the app.
-    mainWindow.loadURL('http://localhost:3000/main_window');
-    // Open the DevTools only in development
-    if (true) {
-        mainWindow.webContents.openDevTools();
-    }
-};
-// Add this menu template before the createWindow function
-const createMenu = () => {
-    const template = [
-        {
-            label: 'File',
-            submenu: [
-                {
-                    label: 'New Window',
-                    accelerator: 'CmdOrCtrl+N',
-                    click: () => createWindow(),
-                },
-                { type: 'separator' },
-                {
-                    label: 'Exit',
-                    accelerator: process.platform === 'darwin' ? 'Cmd+Q' : 'Alt+F4',
-                    click: () => electron_1.app.quit(),
-                },
-            ],
-        },
-        {
-            label: 'Edit',
-            submenu: [
-                { label: 'Undo', accelerator: 'CmdOrCtrl+Z', role: 'undo' },
-                { label: 'Redo', accelerator: 'Shift+CmdOrCtrl+Z', role: 'redo' },
-                { type: 'separator' },
-                { label: 'Cut', accelerator: 'CmdOrCtrl+X', role: 'cut' },
-                { label: 'Copy', accelerator: 'CmdOrCtrl+C', role: 'copy' },
-                { label: 'Paste', accelerator: 'CmdOrCtrl+V', role: 'paste' },
-                { label: 'Select All', accelerator: 'CmdOrCtrl+A', role: 'selectAll' },
-            ],
-        },
-        {
-            label: 'View',
-            submenu: [
-                { role: 'reload' },
-                { role: 'toggleDevTools' },
-                { type: 'separator' },
-                { role: 'resetZoom' },
-                { role: 'zoomIn' },
-                { role: 'zoomOut' },
-                { type: 'separator' },
-                { role: 'togglefullscreen' },
-            ],
-        },
-        {
-            label: 'Help',
-            submenu: [
-                {
-                    label: 'About',
-                    click: () => __awaiter(void 0, void 0, void 0, function* () {
-                        const parentWindow = electron_1.BrowserWindow.getFocusedWindow();
-                        const parentBounds = parentWindow.getBounds();
-                        const aboutWindow = new electron_1.BrowserWindow({
-                            width: 300,
-                            height: 500,
-                            roundedCorners: false,
-                            modal: true,
-                            parent: parentWindow,
-                            resizable: false,
-                            minimizable: false,
-                            maximizable: false,
-                            webPreferences: {
-                                nodeIntegration: true,
-                                contextIsolation: false
-                            }
-                        });
-                        // Calculate center position relative to parent window
-                        const x = Math.round(parentBounds.x + (parentBounds.width - 300) / 2);
-                        const y = Math.round(parentBounds.y + (parentBounds.height - 500) / 2);
-                        aboutWindow.setPosition(x, y);
-                        aboutWindow.setMenu(null);
-                        aboutWindow.loadFile('src/views/about.html');
-                        aboutWindow.once('ready-to-show', () => {
-                            aboutWindow.show();
-                        });
-                    }),
-                },
-            ],
-        },
-    ];
-    const menu = electron_1.Menu.buildFromTemplate(template);
-    electron_1.Menu.setApplicationMenu(menu);
-};
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-electron_1.app.on('ready', () => {
-    createMenu();
-    createWindow();
-});
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
-electron_1.app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        electron_1.app.quit();
-    }
-});
-electron_1.app.on('activate', () => {
-    // On OS X it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (electron_1.BrowserWindow.getAllWindows().length === 0) {
-        createWindow();
-    }
-});
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
-
-
-/***/ }),
-
 /***/ "child_process":
 /*!********************************!*\
   !*** external "child_process" ***!
@@ -1146,7 +991,7 @@ module.exports = require("util");
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -1158,13 +1003,71 @@ module.exports = require("util");
 /******/ 	if (typeof __webpack_require__ !== 'undefined') __webpack_require__.ab = __dirname + "/native_modules/";
 /******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/index.ts");
-/******/ 	module.exports = __webpack_exports__;
-/******/ 	
+var __webpack_exports__ = {};
+// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
+(() => {
+"use strict";
+var exports = __webpack_exports__;
+/*!**********************!*\
+  !*** ./src/index.ts ***!
+  \**********************/
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const electron_1 = __webpack_require__(/*! electron */ "electron");
+// Handle creating/removing shortcuts on Windows when installing/uninstalling.
+if (__webpack_require__(/*! electron-squirrel-startup */ "./node_modules/electron-squirrel-startup/index.js")) {
+    electron_1.app.quit();
+}
+const createWindow = () => {
+    // Create the browser window.
+    const mainWindow = new electron_1.BrowserWindow({
+        height: 800,
+        width: 1200,
+        minWidth: 1000,
+        minHeight: 700,
+        autoHideMenuBar: false,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false,
+            webSecurity: true,
+            preload: 'C:\\Projects\\blog\\20241227-electron\\electron-forge-webpack-app\\.webpack\\renderer\\main_window\\preload.js',
+            sandbox: false
+        }
+    });
+    // and load the index.html of the app.
+    mainWindow.loadURL('http://localhost:3000/main_window');
+    // Open the DevTools only in development
+    if (true) {
+        mainWindow.webContents.openDevTools();
+    }
+};
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
+electron_1.app.on('ready', () => {
+    createWindow();
+});
+// Quit when all windows are closed, except on macOS. There, it's common
+// for applications and their menu bar to stay active until the user quits
+// explicitly with Cmd + Q.
+electron_1.app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+        electron_1.app.quit();
+    }
+});
+electron_1.app.on('activate', () => {
+    // On OS X it's common to re-create a window in the app when the
+    // dock icon is clicked and there are no other windows open.
+    if (electron_1.BrowserWindow.getAllWindows().length === 0) {
+        createWindow();
+    }
+});
+// In this file you can include the rest of your app's specific main process
+// code. You can also put them in separate files and import them here.
+
+})();
+
+module.exports = __webpack_exports__;
 /******/ })()
 ;
 //# sourceMappingURL=index.js.map
