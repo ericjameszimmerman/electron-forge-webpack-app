@@ -154,7 +154,6 @@ const initDashboard = () => {
     updateChart(newData);
   }, 1000);
 };
-
 // Initialize everything when DOM is ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
@@ -165,3 +164,4 @@ if (document.readyState === 'loading') {
   initDashboard();
   handleNavigation();
 }
+

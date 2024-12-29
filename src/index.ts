@@ -36,10 +36,99 @@ const createWindow = (): void => {
   }
 };
 
+// Add this menu template before the createWindow function
+const createMenu = (): void => {
+  const template: Electron.MenuItemConstructorOptions[] = [
+    {
+      label: 'File',
+      submenu: [
+        {
+          label: 'New Window',
+          accelerator: 'CmdOrCtrl+N',
+          click: () => createWindow(),
+        },
+        { type: 'separator' },
+        {
+          label: 'Exit',
+          accelerator: process.platform === 'darwin' ? 'Cmd+Q' : 'Alt+F4',
+          click: () => app.quit(),
+        },
+      ],
+    },
+    {
+      label: 'Edit',
+      submenu: [
+        { label: 'Undo', accelerator: 'CmdOrCtrl+Z', role: 'undo' },
+        { label: 'Redo', accelerator: 'Shift+CmdOrCtrl+Z', role: 'redo' },
+        { type: 'separator' },
+        { label: 'Cut', accelerator: 'CmdOrCtrl+X', role: 'cut' },
+        { label: 'Copy', accelerator: 'CmdOrCtrl+C', role: 'copy' },
+        { label: 'Paste', accelerator: 'CmdOrCtrl+V', role: 'paste' },
+        { label: 'Select All', accelerator: 'CmdOrCtrl+A', role: 'selectAll' },
+      ],
+    },
+    {
+      label: 'View',
+      submenu: [
+        { role: 'reload' },
+        { role: 'toggleDevTools' },
+        { type: 'separator' },
+        { role: 'resetZoom' },
+        { role: 'zoomIn' },
+        { role: 'zoomOut' },
+        { type: 'separator' },
+        { role: 'togglefullscreen' },
+      ],
+    },
+    {
+      label: 'Help',
+      submenu: [
+        {
+          label: 'About',
+          click: async () => {
+            const parentWindow = BrowserWindow.getFocusedWindow();
+            const parentBounds = parentWindow.getBounds();
+            
+            const aboutWindow = new BrowserWindow({
+              width: 300,
+              height: 500,
+              roundedCorners: false,
+              modal: true,
+              parent: parentWindow,
+              resizable: false,
+              minimizable: false,
+              maximizable: false,
+              webPreferences: {
+                nodeIntegration: true,
+                contextIsolation: false
+              }
+            });
+
+            // Calculate center position relative to parent window
+            const x = Math.round(parentBounds.x + (parentBounds.width - 300) / 2);
+            const y = Math.round(parentBounds.y + (parentBounds.height - 500) / 2);
+            aboutWindow.setPosition(x, y);
+
+            aboutWindow.setMenu(null);
+            aboutWindow.loadFile('src/views/about.html');
+            aboutWindow.once('ready-to-show', () => {
+              aboutWindow.show();
+            });
+          },
+        },
+      ],
+    },
+  ];
+
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
+};
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
+  createMenu();
   createWindow();
 });
 
